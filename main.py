@@ -42,5 +42,5 @@ async def main():
     bot = Bot(TELEGRAM_BOT_TOKEN, parse_mode="HTML")
     await dp.start_polling(bot)
 
-if __name__ == "__main__":
+if __name__ == "__main.ру__":
     asyncio.run(main())
