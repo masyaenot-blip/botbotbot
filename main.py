@@ -78,7 +78,7 @@ async def main():
     logger.info("Starting polling...")
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
-if name == "main":
+if _name_ == "_main_":
     try:
         asyncio.run(main())
     except Exception:
