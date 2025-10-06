@@ -16,7 +16,7 @@ def env(name: str) -> str:
     return v
 
 TELEGRAM_BOT_TOKEN = env("TELEGRAM_BOT_TOKEN")
-WEB_APP_URL        = env("WEB_APP_URL")  # ваш Vercel URL, напр. https://tour-app.vercel.app
+WEB_APP_URL        = env("WEB_APP_URL")  # например: https://your-app.vercel.app
 
 @dp.message(CommandStart())
 async def on_start(message: Message):
@@ -27,11 +27,10 @@ async def on_start(message: Message):
         resize_keyboard=True,
         is_persistent=True
     )
-    text = (
-        "Нажмите кнопку ниже чтобы забронировать тур.\n"
-        "Кнопка называется «Забронировать тур»."
+    await message.answer(
+        "Нажмите кнопку ниже чтобы забронировать тур.\nКнопка называется «Забронировать тур».",
+        reply_markup=kb
     )
-    await message.answer(text, reply_markup=kb)
 
 @dp.message(F.web_app_data)
 async def on_webapp_data(message: Message):
