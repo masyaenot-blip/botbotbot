@@ -11,6 +11,8 @@ from aiogram.types import (
     InlineKeyboardMarkup, InlineKeyboardButton,
     WebAppInfo, MenuButtonWebApp
 )
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("bot")
@@ -39,7 +41,7 @@ async def on_webapp_data(message: Message):
     await message.answer(f"Данные из мини-приложения:\n<code>{message.web_app_data.data}</code>")
 
 async def main():
-    print("BUILD_MARKER=railway_runtime_start")            # ✅ увидим в Runtime Logs
+    print("BUILD_MARKER=railway_runtime_start")   # маркер, чтобы видеть запуск в Runtime Logs
     print("Python:", sys.version)
     print("CWD:", os.getcwd())
 
@@ -49,24 +51,24 @@ async def main():
     global WEB_APP_URL
     WEB_APP_URL = url
 
-    bot = Bot(token, parse_mode="HTML")
+    # ✅ aiogram 3.7+: parse_mode задаём через DefaultBotProperties
+    bot = Bot(
+        token=token,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+    )
 
-    # ВАЖНО: удалим webhook, если он где-то был включён (иначе polling даст 409 Conflict)
+    # убрать возможный вебхук, чтобы не было 409 при поллинге
     try:
         await bot.delete_webhook(drop_pending_updates=True)
         logger.info("Webhook removed (drop_pending_updates=True)")
     except Exception as e:
         logger.warning("delete_webhook failed: %r", e)
 
-    # Проверим соединение и логин бота
-    try:
-        me = await bot.get_me()
-        logger.info("Bot logged in as @%s (id=%s)", me.username, me.id)
-    except Exception:
-        logger.exception("get_me failed")
-        raise
+    # проверим логин бота
+    me = await bot.get_me()
+    logger.info("Bot logged in as @%s (id=%s)", me.username, me.id)
 
-    # Поставим кнопку в меню (дополнительно к inline)
+    # кнопка в нижнем меню (дополнительно к inline)
     try:
         await bot.set_chat_menu_button(
             menu_button=MenuButtonWebApp(text="Забронировать тур", web_app=WebAppInfo(url=WEB_APP_URL))
