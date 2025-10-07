@@ -32,7 +32,7 @@ async def on_start(message: Message):
         InlineKeyboardButton(text="Узнать подробней", web_app=WebAppInfo(url=WEB_APP_URL))
     ]])
     await message.answer(
-        "Нажмите кнопку ниже "Узнать подробней".\n",
+        "Нажмите кнопку ниже «Узнать подробней».\n",
         reply_markup=kb
     )
 
