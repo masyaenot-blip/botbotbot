@@ -32,7 +32,7 @@ async def on_start(message: Message):
         InlineKeyboardButton(text="Узнать подробней", web_app=WebAppInfo(url=WEB_APP_URL))
     ]])
     await message.answer(
-        "Нажмите кнопку ниже Узнать подробней.\n.",
+        "Нажмите кнопку ниже Узнать подробней.\n",
         reply_markup=kb
     )
 
@@ -71,7 +71,7 @@ async def main():
     # кнопка в нижнем меню (дополнительно к inline)
     try:
         await bot.set_chat_menu_button(
-            menu_button=MenuButtonWebApp(text="Забронировать тур", web_app=WebAppInfo(url=WEB_APP_URL))
+            menu_button=MenuButtonWebApp(text="Туры", web_app=WebAppInfo(url=WEB_APP_URL))
         )
         logger.info("Menu button set")
     except Exception as e:
