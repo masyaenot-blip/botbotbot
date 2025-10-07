@@ -29,10 +29,10 @@ def env(key: str) -> str:
 @dp.message(CommandStart())
 async def on_start(message: Message):
     kb = InlineKeyboardMarkup(inline_keyboard=[[
-        InlineKeyboardButton(text="Забронировать тур", web_app=WebAppInfo(url=WEB_APP_URL))
+        InlineKeyboardButton(text="Узнать подробней", web_app=WebAppInfo(url=WEB_APP_URL))
     ]])
     await message.answer(
-        "Нажмите кнопку ниже чтобы забронировать тур.\nКнопка называется «Забронировать тур».",
+        "Нажмите кнопку ниже Узнать подробней.\n.",
         reply_markup=kb
     )
 
